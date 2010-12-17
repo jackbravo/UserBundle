@@ -12,6 +12,7 @@ namespace Bundle\DoctrineUserBundle\Model;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\User\AdvancedAccountInterface;
+use Symfony\Component\Security\Encoder\MessageDigestPasswordEncoder;
 
 /**
  * Storage agnostic user object
@@ -389,7 +390,8 @@ abstract class User implements AdvancedAccountInterface
      */
     protected function hashPassword($password)
     {
-        return hash_hmac($this->algorithm, $password, $this->salt);
+        $passwordEncoder = new MessageDigestPasswordEncoder($this->algorithm);
+        return $passwordEncoder->encodePassword($password, $this->salt);
     }
 
     /**

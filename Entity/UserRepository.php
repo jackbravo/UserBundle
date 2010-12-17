@@ -38,7 +38,7 @@ class UserRepository extends ObjectRepository implements UserRepositoryInterface
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->findOneByUsername($username);
+        $user = $this->findOneByUsernameOrEmail($username);
 
         if(!$user) {
             throw new UsernameNotFoundException(sprintf('The user "%s" does not exist'));
